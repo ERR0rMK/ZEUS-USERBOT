@@ -1,0 +1,46 @@
+
+
+_get_repolink () {
+    local regex
+    regex='(https?)://github.com/.+/.+'
+    if [[ $ROYAL_REPO == "ROYALBOT" ]]
+    then
+        echo "aHR0cHM6Ly9naXRodWIuY29tL1RIRS1ST1lBTFNCT1QvUk9ZQUxVU0VSQk9UL2FyY2hpdmUvbWFpbi56aXA=" | base64 -d
+    elif [[ $ROYAL_REPO == "ROYALBOT" ]]
+    then
+        echo "aHR0cHM6Ly9naXRodWIuY29tL1RIRS1ST1lBTFNCT1QvUk9ZQUxVU0VSQk9UL2FyY2hpdmUvbWFpbi56aXA=" | base64 -d
+    elif [[ $ROYAL_REPO =~ $regex ]]
+    then
+        if [[ $ROYAL_REPO_BRANCH ]]
+        then
+            echo "${ROYAL_REPO}/archive/${ROYAL_REPO_BRANCH}.zip"
+        else
+            echo "${ROYAL_REPO}/archive/master.zip"
+        fi
+    else
+        echo "aHR0cHM6Ly9naXRodWIuY29tL1RIRS1ST1lBTFNCT1QvUk9ZQUxVU0VSQk9UL2FyY2hpdmUvbWFpbi56aXA=" | base64 -d
+    fi
+}
+
+
+_sett_bot () {
+    local zippath
+    zippath="ROYAL.zip"
+    echo "  Downloading ZeusBot Source Code..."
+    wget -q $(_get_repolink) -O "$zippath"
+    echo "  Unpacking Data ..."
+    ROYALPATH=$(zipinfo -1 "$zippath" | grep -v "/.");
+    unzip -qq "$zippath"
+    echo "Done"
+    echo "  RoyalBot V3.O Cleaning.."
+    rm -rf "$zippath"
+    sleep 5
+    cd $ROYALPATH
+    echo " Starting ZEUS USERBOT⚜️     "
+    echo " ❤❤❤❤❤❤❤❤❤❤❤❤     "
+
+    python3 ../setup/updater.py ../requirements.txt requirements.txt
+    python3 -m userbot
+}
+
+_sett_bot
