@@ -137,7 +137,7 @@
       "description": "Copy Group Id And paste here To Get Plugin Channel ID copy and paste here",
       "value": ""
     }, 
-    "STRING": {
+    "ROYAL_STRING": {
       "description": "Telethon session string",
       "value": ""
     },
